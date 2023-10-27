@@ -29,14 +29,30 @@ class _RefreshIndicatorExampleState extends State<RefreshIndicatorExample> {
       List.generate(10, (index) => 'Item $index'); // Lista de elementos
 
   Widget _buildPage(int pageIndex) {
+    Color pageColor;
+    switch (pageIndex) {
+      case 0:
+        pageColor = Colors.pink; // Primera página rosada
+        break;
+      case 1:
+        pageColor = Colors.blue; // Segunda página celeste
+        break;
+      case 2:
+        pageColor = Colors.yellow; // Tercera página amarilla
+        break;
+      default:
+        pageColor = Colors.white; // Por defecto, blanco
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Página ${pageIndex + 1}'),
+        backgroundColor: pageColor, // Cambiar el color de la AppBar
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
         color: Colors.white,
-        backgroundColor: Colors.blue,
+        backgroundColor: pageColor, // Cambiar el color del fondo del cuerpo
         strokeWidth: 4.0,
         onRefresh: () async {
           await Future<void>.delayed(const Duration(seconds: 3));
