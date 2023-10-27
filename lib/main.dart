@@ -31,7 +31,7 @@ class _RefreshIndicatorExampleState extends State<RefreshIndicatorExample> {
   Widget _buildPage(int pageIndex) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Página'),
+        title: Text('Página ${pageIndex + 1}'),
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
