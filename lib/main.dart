@@ -36,6 +36,8 @@ class _RefreshIndicatorExampleState extends State<RefreshIndicatorExample> {
     List.generate(4, (index) => 'Item $index'),
   ]; // Lista de elementos
 
+  PageController _pageController = PageController(initialPage: 0);
+
   Widget _buildPage(int pageIndex) {
     Color pageColor;
     switch (pageIndex) {
@@ -97,11 +99,44 @@ class _RefreshIndicatorExampleState extends State<RefreshIndicatorExample> {
 
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-      itemCount: 3,
-      itemBuilder: (context, index) {
-        return _buildPage(index);
-      },
+    return Scaffold(
+      body: PageView.builder(
+        controller: _pageController,
+        itemCount: 3,
+        itemBuilder: (context, index) {
+          return _buildPage(index);
+        },
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                if (_pageController.page! > 0) {
+                  _pageController.previousPage(
+                    duration: Duration(milliseconds: 500),
+                    curve: Curves.ease,
+                  );
+                }
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.arrow_forward),
+              onPressed: () {
+                if (_pageController.page! < 2) {
+                  _pageController.nextPage(
+                    duration: Duration(milliseconds: 500),
+                    curve: Curves.ease,
+                  );
+                }
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
