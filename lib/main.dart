@@ -23,10 +23,18 @@ class RefreshIndicatorExample extends StatefulWidget {
 class _RefreshIndicatorExampleState extends State<RefreshIndicatorExample> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-  List<String> originalItems = List.generate(
-      10, (index) => 'Item $index'); // Lista de elementos original
-  List<String> items =
-      List.generate(10, (index) => 'Item $index'); // Lista de elementos
+
+  List<List<String>> originalItems = [
+    List.generate(4, (index) => 'Item $index'),
+    List.generate(4, (index) => 'Item $index'),
+    List.generate(4, (index) => 'Item $index'),
+  ]; // Lista de elementos original
+
+  List<List<String>> items = [
+    List.generate(4, (index) => 'Item $index'),
+    List.generate(4, (index) => 'Item $index'),
+    List.generate(4, (index) => 'Item $index'),
+  ]; // Lista de elementos
 
   Widget _buildPage(int pageIndex) {
     Color pageColor;
@@ -58,15 +66,15 @@ class _RefreshIndicatorExampleState extends State<RefreshIndicatorExample> {
           await Future<void>.delayed(const Duration(seconds: 3));
           setState(() {
             // Restaurar la lista original
-            items = List.from(originalItems);
+            items[pageIndex] = List.from(originalItems[pageIndex]);
           });
         },
-        child: _buildReorderableListView(),
+        child: _buildReorderableListView(items[pageIndex]),
       ),
     );
   }
 
-  Widget _buildReorderableListView() {
+  Widget _buildReorderableListView(List<String> items) {
     return ReorderableListView(
       onReorder: (oldIndex, newIndex) {
         setState(() {
